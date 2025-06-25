@@ -1,16 +1,20 @@
 ---
+import Layout from "@/layouts/layout.astro";
+import { getTrainings } from "@/api";
 
+const trainings = await getTrainings();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Campus">
+  <h1 class="text-2xl font-bold mb-4">Listado de cursos</h1>
+  <ul class="space-y-4">
+    {
+      trainings.map((training) => (
+        <li class="p-4 border rounded">
+          <h2 class="text-xl font-semibold">{training.title}</h2>
+          <p>{training.overview}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
