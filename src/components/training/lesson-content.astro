@@ -1,12 +1,36 @@
 ---
+import { marked } from 'marked'
+import hljs from 'highlight.js'
+import sanitizeHtml from 'sanitize-html'
+
 export interface Props {
   content: string;
 }
 
 const { content } = Astro.props;
+const dangerousHtmlContent = await marked(content)
+
+ const htmlContent = sanitizeHtml(dangerousHtmlContent, {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+    "pre", // Allow for multiline block code
+    "code", // Allow inline code
+    "span", // Used by highlight.js to color keyword, comments...
+  ]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes, // Default allowed attributes
+    "*": ["class"], // Allow class in all element (used by hljs)
+  },
+ });
+ 
+
 ---
 
 <h3 class="text-xl font-bold mb-4 text-gray-800">Contenido de la Lección</h3>
-<p id="lessonContent" class="text-gray-700 leading-relaxed text-base">
-  {content}
-</p>
+
+<div class="markdown-content" set:html={htmlContent}></div>
+
+<style>
+  :global(.markdown-content p) {
+    margin-bottom: 1em;
+  }
+</style>

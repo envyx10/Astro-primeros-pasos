@@ -1,7 +1,9 @@
 ---
 // Nos traemos también los estilos globales (tailwind)
 import "../styles/global.css";
+import 'highlight.js/styles/github-dark.css'
 import Header from "@/components/header.astro"
+import { ClientRouter } from "astro:transitions" // Importamos el enrutador del cliente para transiciones suaves
 
 const { title } = Astro.props;
 ---
@@ -13,6 +15,7 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ClientRouter /> <!-- // Habilitamos el enrutador del cliente para transiciones suaves -->
   </head>
   <body>
 
