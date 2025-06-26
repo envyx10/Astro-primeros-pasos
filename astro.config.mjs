@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
 import tailwindcss from "@tailwindcss/vite";
 import react from '@astrojs/react';
+import node from '@astrojs/node'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -10,6 +11,8 @@ const __dirname = dirname(__filename);
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
+  adapter: node({ mode: 'standalone' }), // Configuración para Node.js
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
